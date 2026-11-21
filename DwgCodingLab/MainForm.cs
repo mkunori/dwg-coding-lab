@@ -21,6 +21,12 @@ namespace DwgCodingLab
                 return;
             }
 
+            if (!string.Equals(Path.GetExtension(dialog.FileName), ".dwg", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(this, "ファイル名の拡張子を .dwg にしてください。");
+                return;
+            }
+
             try
             {
                 LineDwgExporter.Export(dialog.FileName);
