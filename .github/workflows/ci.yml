@@ -1,0 +1,36 @@
+
+name: .NET CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build WinForms (.NET 10)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore DwgCodingLab/DwgCodingLab.csproj
+
+      - name: Build
+        run: dotnet build DwgCodingLab/DwgCodingLab.csproj --configuration Release --no-restore
